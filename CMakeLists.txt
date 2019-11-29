@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(Workshop9 CXX)
+project(Workshop10 CXX)
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -13,4 +13,4 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
 #### the list of targets ####
-add_executable(WS_9 src/main.cpp)
+add_executable(workshop10 src/main.cpp src/exampleheader.h )

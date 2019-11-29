@@ -40,50 +40,70 @@
  * 7.2) return distance (distance between cities (two paired coordinates -- distance(pair(lat_1,lng_1),pair(lat_2,lng_2))
  * 7.3) to be continued...
  ******************************************************************************/
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
 
 
+#include "exampleheader.h"
 
 
-std::vector< std::vector<std::string> > fillWorldCities(std::istream& inputFile)
+void printCoordinates(const CityData &city)
 {
-    std::vector<std::vector<std::string>> worldCities;
+    std::cout << "Latitude: ";
+    std::cout << city.latitude;
+    std::cout << " Longitude: ";
+    std::cout << city.longitude;
+    return;
+}
+
+
+
+void printCityNames(const std::vector<CityData> &worldCities)
+{
+    for(int i = 0; i < worldCities.size(); ++i)
+    {
+        std::cout << worldCities[i].name << std::endl;
+    }
+}
+
+std::vector<CityData> fillWorldCities(std::istream& inputFile)
+{
+    std::vector<CityData> worldCities;
     
     std::string line;
-    std::vector <std::string> lineVector;
     while (!inputFile.eof() && inputFile.good())
     {
-        lineVector.clear();
+        CityData currentCity;
         std::getline (inputFile, line);
         std::stringstream ss(line);
         std::string token;
-
+        int tokenCount = 0;
         while (!ss.eof() && ss.good())
         {
             std::getline(ss, token,',');
-            lineVector.push_back(token);
+
+            
+            
+            // PUT YOUR CODE HERE
+
+            
+            
+            tokenCount++;
         }
-        worldCities.push_back(lineVector);
+        worldCities.push_back(currentCity);
     }
 
     return worldCities;
 }
 
-
-
 int main ()
 {
     
-    std::vector<std::vector<std::string>> worldCities;
+    std::vector<CityData> worldCities;
     
-    const std::string INP_FILE_NAME = "/home/georgii/WORK/DSBA/repositories/workshop8/workshop8/tasks/input.csv";
+//    const std::string INP_FILE_NAME = ;
     std::ifstream inputFile;
-    inputFile.open(INP_FILE_NAME);
+    inputFile.open("/home/georgii/WORK/DSBA/repositories/workshop9/WS_9/worldcities.csv");
     
+    worldCities = fillWorldCities(inputFile);
     
-    
-
+    printCityNames(worldCities);
 }
