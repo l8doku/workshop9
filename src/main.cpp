@@ -12,10 +12,12 @@
  *
  * 4) Create a function which prints countries and their capitals.
  *
- * 5) Create a function called uninhabitedLongitude. You should find longitudes (rounding to ceil, 20.7458 -> 20) where
+ * 5) Create a function called uninhabitedLongitude. 
+ * You should find longitudes (rounding to ceil, 20.7458 -> 20) where
  * there are no cities and print these longitudes out.
  *
- * 6) Find and save to file "population.txt" population by countries and cities. (use map<string,map<string,int>>).
+ * 6) Find and save to file "population.txt" population by countries and cities.
+ *  (use map<string,map<string,int>>).
  * If there are no info in population field use "?"-sign. Table should be looks like:
  * Russia: N_1
  * -> Moscow : N_1_1 / N_1
@@ -54,7 +56,23 @@ void printCoordinates(const CityData &city)
     return;
 }
 
-
+CountryMap fillCountries(const std::vector<CityData> &worldCities)
+{
+    std::vector<std::string> worldCountries;
+    CountryMap countryMap;
+    
+    for (int i = 0; i < worldCities.size(); ++i)
+    {
+        std::string currentCountry = worldCities[i].country;
+        countryMap[currentCountry].push_back(worldCities[i]);
+    }
+    
+    return countryMap;
+//    {   
+//        {"Kosovo", {"Prizren", "Dragash"}}
+//    }
+    
+}
 
 
 
@@ -62,7 +80,7 @@ void printCityNames(const std::vector<CityData> &worldCities)
 {
     for(int i = 0; i < worldCities.size(); ++i)
     {
-        std::cout << worldCities[i].latitude << std::endl;
+        std::cout << worldCities[i].country << std::endl;
     }
 }
 
@@ -102,6 +120,16 @@ std::vector<CityData> fillWorldCities(std::istream& inputFile)
             case 3:
                 currentCity.longitude = std::stod(token);
                 break;
+            case 4:
+                currentCity.country = token;
+                break;
+            case 9:
+                try {
+                    currentCity.population = std::stoi(token);                    
+                }  catch (std::exception & e) {
+                    currentCity.population = 0;
+                } 
+                break;
             default:
                 break;
             }
@@ -112,6 +140,68 @@ std::vector<CityData> fillWorldCities(std::istream& inputFile)
 
     return worldCities;
 }
+
+
+void printCountries(const CountryMap& countryMap)
+{
+    for(CountryMap::const_iterator it = countryMap.cbegin();
+        it != countryMap.cend(); 
+        ++it)
+    {
+        int totalPopulation = 0;
+//        vectorit - vector.begin()
+        std::cout << "\n" << it->first << std::endl;
+        
+        std::vector<CityData> currentCities = it->second;
+        for(int i = 0; i < currentCities.size(); ++i)
+        {
+            totalPopulation += currentCities[i].population;
+        }
+        std::cout << totalPopulation << std::endl;
+        
+        for(int i = 0; i < currentCities.size(); ++i)
+        {
+            std::cout << currentCities[i].name;
+            std::cout << ": ";
+            std::cout << currentCities[i].population;
+            std::cout << " / ";
+            std::cout << totalPopulation;
+            std::cout << "\n";
+            
+        }
+    }
+}
+
+//void outputPopulation(const CountryMap& countryMap)
+//{
+//    for(CountryMap::const_iterator it = countryMap.cbegin();
+//        it != countryMap.cend(); 
+//        ++it)
+//    {
+//        std::cout << it->first << std::endl;
+//    }
+////     (use map<string,map<string,int>>)
+//}
+
+int main2()
+{
+    CityData exampleData;
+    exampleData.name = "MyCity";
+    
+    CityData* exPointer = &exampleData;
+    
+        std::cout << exampleData.name << std::endl;
+        std::cout << exPointer->name << std::endl;
+        std::cout << (*exPointer).name << std::endl;
+    
+        
+        
+//    int a = 0;
+//    int* b = &a;
+//    std::cout << b << std::endl;
+//    std::cout << *b;
+}
+
 
 int main ()
 {
@@ -132,19 +222,7 @@ int main ()
         
     }
     
-    
-    
-    
-        
-//    delete exampleDataPointer;
-
-
-
-
-
-
-
-    
+   
     
 //    const std::string INP_FILE_NAME = ;
     std::ifstream inputFile;
@@ -154,6 +232,7 @@ int main ()
         std::cout << "File did not open";
     }
     worldCities = fillWorldCities(inputFile);
-    
-    printCityNames(worldCities);
+    CountryMap countryMap = fillCountries(worldCities);
+    printCountries(countryMap);
+//    printCityNames(worldCities);
 }
