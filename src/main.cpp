@@ -56,11 +56,13 @@ void printCoordinates(const CityData &city)
 
 
 
+
+
 void printCityNames(const std::vector<CityData> &worldCities)
 {
     for(int i = 0; i < worldCities.size(); ++i)
     {
-        std::cout << worldCities[i].name << std::endl;
+        std::cout << worldCities[i].latitude << std::endl;
     }
 }
 
@@ -73,19 +75,36 @@ std::vector<CityData> fillWorldCities(std::istream& inputFile)
     {
         CityData currentCity;
         std::getline (inputFile, line);
-        std::stringstream ss(line);
+        std::getline (inputFile, line);
+        std::stringstream lineStringStream(line);
         std::string token;
         int tokenCount = 0;
-        while (!ss.eof() && ss.good())
+        while (!lineStringStream.eof() && lineStringStream.good())
         {
-            std::getline(ss, token,',');
+            std::getline(lineStringStream, token,',');
+            std::stringstream sstoken;
+            if (token.size() > 1)
+            {
+                token = token.substr(1, token.size() - 2);
+            }
 
-            
-            
-            // PUT YOUR CODE HERE
-
-            
-            
+            switch(tokenCount)
+            {
+            case 0:
+                currentCity.name = token;
+                break;
+            case 1:
+                currentCity.nameAscii = token;
+                break;
+            case 2:
+                currentCity.latitude = std::stod(token);
+                break;
+            case 3:
+                currentCity.longitude = std::stod(token);
+                break;
+            default:
+                break;
+            }
             tokenCount++;
         }
         worldCities.push_back(currentCity);
@@ -97,12 +116,43 @@ std::vector<CityData> fillWorldCities(std::istream& inputFile)
 int main ()
 {
     
+
     std::vector<CityData> worldCities;
+    
+    
+    
+    CityData exampleData;
+    exampleData.latitude = 0;
+    
+    
+    for(int i = 0; i < 100000; i++)
+    {
+        CityData* exampleDataPointer = new CityData;
+        exampleDataPointer->latitude = 0;
+        
+    }
+    
+    
+    
+    
+        
+//    delete exampleDataPointer;
+
+
+
+
+
+
+
+    
     
 //    const std::string INP_FILE_NAME = ;
     std::ifstream inputFile;
     inputFile.open("/home/georgii/WORK/DSBA/repositories/workshop9/WS_9/worldcities.csv");
-    
+    if(!inputFile)
+    {
+        std::cout << "File did not open";
+    }
     worldCities = fillWorldCities(inputFile);
     
     printCityNames(worldCities);
