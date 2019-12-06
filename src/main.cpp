@@ -80,7 +80,8 @@ void printCityNames(const std::vector<CityData> &worldCities)
 {
     for(int i = 0; i < worldCities.size(); ++i)
     {
-        std::cout << worldCities[i].country << std::endl;
+        std::cout << worldCities[i] << std::endl;
+        worldCities[i].print();
     }
 }
 
@@ -233,6 +234,6 @@ int main ()
     }
     worldCities = fillWorldCities(inputFile);
     CountryMap countryMap = fillCountries(worldCities);
-    printCountries(countryMap);
-//    printCityNames(worldCities);
+//    printCountries(countryMap);
+    printCityNames(worldCities);
 }

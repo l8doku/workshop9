@@ -24,7 +24,18 @@ struct CityData
     
     std::vector<CityData> fillWorldCities(std::istream& inputFile);
     void printCityNames(const std::vector<CityData> &worldCities);
+    void print() const;
 };
+
+std::ostream& operator << (std::ostream &o,const CityData &a){
+    o<<"x: " << a.latitude <<"\ty: " << a.longitude <<std::endl;
+    return o;
+}
+
+void CityData::print() const
+{
+    std::cout << this->name << std::endl;
+}
 
 typedef std::map<std::string, std::vector<CityData> > CountryMap;
 
