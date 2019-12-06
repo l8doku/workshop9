@@ -13,4 +13,4 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
 #### the list of targets ####
-add_executable(workshop10 src/main.cpp src/exampleheader.h )
+add_executable(workshop10 src/main.cpp src/citydata.h src/citydata.cpp)

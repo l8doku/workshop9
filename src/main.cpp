@@ -44,7 +44,8 @@
  ******************************************************************************/
 
 
-#include "exampleheader.h"
+#include "citydata.h"
+
 
 
 void printCoordinates(const CityData &city)
@@ -52,6 +53,7 @@ void printCoordinates(const CityData &city)
     std::cout << "Latitude: ";
     std::cout << city.latitude;
     std::cout << " Longitude: ";
+    
     std::cout << city.longitude;
     return;
 }
@@ -68,15 +70,12 @@ CountryMap fillCountries(const std::vector<CityData> &worldCities)
     }
     
     return countryMap;
-//    {   
-//        {"Kosovo", {"Prizren", "Dragash"}}
-//    }
-    
+
 }
 
 
 
-void printCityNames(const std::vector<CityData> &worldCities)
+void printCityNames(const std::vector<CityData>& worldCities)
 {
     for(int i = 0; i < worldCities.size(); ++i)
     {
